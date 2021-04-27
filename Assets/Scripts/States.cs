@@ -84,6 +84,13 @@ class WaitState : State
         //checks it has a target
         if (owner.GetComponent<DogController>().ball != null)
         {
+            Vector3 targetDir = owner.GetComponent<DogController>().player.transform.position - owner.transform.position;
+            targetDir.y = 0;//keep it on same level
+            Quaternion targetRot = Quaternion.LookRotation(targetDir);
+            
+            owner.transform.rotation = Quaternion.Slerp( owner.transform.rotation, targetRot, Time.deltaTime );
+            
+            //wait for the ball to get x distance away
             if (Vector3.Distance(
                 owner.GetComponent<DogController>().ball.transform.position,
                 owner.GetComponent<DogController>().player.transform.position) > 10)
