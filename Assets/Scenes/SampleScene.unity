@@ -1026,10 +1026,10 @@ MonoBehaviour:
   acceleration: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
   mass: 1
-  damping: 0.01
+  damping: 2
   banking: 0.1
-  maxSpeed: 5
-  maxForce: 10
+  maxSpeed: 10
+  maxForce: 15
 --- !u!114 &1503941574
 MonoBehaviour:
   m_ObjectHideFlags: 0

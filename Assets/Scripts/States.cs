@@ -8,6 +8,8 @@ class ChaseBallState : State
     {
         Debug.Log("Dog state: ChaseBallState");
         owner.GetComponent<Seek>().enabled = true;
+
+        owner.GetComponent<AudioManager>().PlayBark();
     }
 
     public override void Think()
@@ -25,8 +27,6 @@ class ChaseBallState : State
             owner.ChangeState(new GoToPlayerState());
             owner.GetComponent<Boid>().velocity = Vector3.zero;
             owner.GetComponent<Boid>().acceleration = Vector3.zero;
-            
-
         }
     }
 
@@ -48,18 +48,26 @@ class GoToPlayerState : State
 
     public override void Think()
     {
-        if (Vector3.Distance(
-            owner.GetComponent<Seek>().targetGameObject.transform.position,
-            owner.transform.position) < 10)
+        float dist = Vector3.Distance(owner.GetComponent<Seek>().targetGameObject.transform.position,
+            owner.transform.position);
+        if (dist < 15)
+        {
+            owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Seek>().targetGameObject;
+            owner.GetComponent<Seek>().enabled = false;
+            owner.GetComponent<Arrive>().enabled = true;
+        }
+        if (dist < 10)
         {
             owner.GetComponent<DogController>().Detach();
             owner.ChangeState(new WaitState());
         }
+        
     }
 
     public override void Exit()
     {
         owner.GetComponent<Seek>().enabled = false;
+        owner.GetComponent<Arrive>().enabled = false;
     }
 }
 

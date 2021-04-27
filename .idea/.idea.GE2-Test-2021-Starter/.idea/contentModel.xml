@@ -8,6 +8,7 @@
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="Arrive.cs" t="Include" />
+          <e p="AudioManager.cs" t="Include" />
           <e p="BallThrow.cs" t="Include" />
           <e p="Boid.cs" t="Include" />
           <e p="DogController.cs" t="Include" />
