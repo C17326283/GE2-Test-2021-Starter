@@ -11,14 +11,11 @@ public class DogController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<StateMachine>().ChangeState(new WaitState());    
+        //go to player at start
+        GetComponent<StateMachine>().ChangeState(new GoToPlayerState());    
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    //pick up ball
     public void Attach(GameObject pickedUpObj)
     {
         pickedUpObj.transform.SetParent(attachPoint.transform);//parent it
@@ -26,6 +23,7 @@ public class DogController : MonoBehaviour
         pickedUpObj.GetComponent<Rigidbody>().isKinematic = true;
     }
     
+    //drop ball
     public void Detach()
     {
         //drop any children of ball attach point
