@@ -6,7 +6,7 @@ public class TailWag : MonoBehaviour
 {
     public float maxAngle = 40;
     public float defaultWagSpeed = 2;
-    public Rigidbody dogRb;//for using megnitude
+    public GameObject dog;//for using megnitude
     public float maxWagSpeed=20;
     public float wagSpeedMultiplier = 2f;
 
@@ -14,7 +14,7 @@ public class TailWag : MonoBehaviour
     void Update()
     {
         //get tail speed based on speed dog is moving
-        float wagSpeed = Mathf.Clamp(defaultWagSpeed + (dogRb.velocity.magnitude*wagSpeedMultiplier),0,maxWagSpeed);
+        float wagSpeed = Mathf.Clamp(defaultWagSpeed + (dog.GetComponent<Boid>().velocity.magnitude*wagSpeedMultiplier),0,maxWagSpeed);
         
         //wave tail back and forth
         float time = Mathf.PingPong(Time.time * wagSpeed, 1);//go back and forth between 0 & length using wagspeed

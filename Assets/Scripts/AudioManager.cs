@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    //for managing and playing the random audio clips
     public AudioClip[] audioClips;
     public AudioSource audioSource;
    

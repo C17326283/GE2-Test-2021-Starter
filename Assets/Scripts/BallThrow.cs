@@ -33,6 +33,7 @@ public class BallThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //start holdign key
         if (Input.GetKey("space"))
         {
             //startHoldingTime = Time.time;
@@ -40,22 +41,25 @@ public class BallThrow : MonoBehaviour
             chargedVal = Mathf.Clamp(chargedVal, minClamp, maxClamp);
         }
         
+        //let go so throw ball
         if (Input.GetKeyUp("space"))
         {
             Debug.Log("Throw ball");
             Throw();
         }
         
-        //update vals
-        //chargedVal = Time.time - startHoldingTime;
+        //update slider
         slider.value = chargedVal;
             
     }
 
     public void Throw()
     {
+        //instantiate if no ball in scene
         if (ball == null)
             MakeBall();
+        
+        //set the correct properties
         ball.transform.SetParent(null);
         ballRb.isKinematic = false;
         
@@ -64,6 +68,7 @@ public class BallThrow : MonoBehaviour
         
         float throwForce = chargedVal * throwForceMult;
         
+        //add force to ball
         ballRb.AddForce(transform.forward*throwForce,ForceMode.Impulse);//add an impulse force to throw
         Debug.Log("throw with force:"+throwForce);
         chargedVal = 0;

@@ -2347,10 +2347,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAngle: 40
-  defaultWagSpeed: 5
-  dogRb: {fileID: 1503941579}
-  maxWagSpeed: 40
-  wagSpeedMultiplier: 2
+  defaultWagSpeed: 3
+  dog: {fileID: 1503941570}
+  maxWagSpeed: 8
+  wagSpeedMultiplier: 1
 --- !u!1001 &1203741995
 PrefabInstance:
   m_ObjectHideFlags: 0
