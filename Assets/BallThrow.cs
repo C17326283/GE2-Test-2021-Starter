@@ -8,13 +8,8 @@ public class BallThrow : MonoBehaviour
     public Rigidbody ballRb;
 
     public float throwForce;
+    public GameObject ballPrefab;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        ballRb = ball.GetComponent<Rigidbody>();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -28,9 +23,17 @@ public class BallThrow : MonoBehaviour
 
     public void Throw()
     {
+        if (ball == null)
+            MakeBall();
         ballRb.velocity = Vector3.zero;//cancel velocity
         ball.transform.position = this.transform.position;
         ballRb.AddForce(transform.forward*throwForce,ForceMode.Impulse);//add an impulse force to throw
 
+    }
+
+    public void MakeBall()
+    {
+        ball = GameObject.Instantiate(ballPrefab, null);
+        ballRb = ball.GetComponent<Rigidbody>();
     }
 }
