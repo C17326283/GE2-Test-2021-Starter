@@ -25,8 +25,8 @@ class ChaseBallState : State
         {
             owner.GetComponent<DogController>().Attach(owner.GetComponent<Seek>().targetGameObject);
             owner.ChangeState(new GoToPlayerState());
-            owner.GetComponent<Boid>().velocity = Vector3.zero;
-            owner.GetComponent<Boid>().acceleration = Vector3.zero;
+            //owner.GetComponent<Boid>().velocity = Vector3.zero;
+            //owner.GetComponent<Boid>().acceleration = Vector3.zero;
         }
     }
 
