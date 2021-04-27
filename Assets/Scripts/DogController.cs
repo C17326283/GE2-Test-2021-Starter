@@ -23,10 +23,16 @@ public class DogController : MonoBehaviour
     {
         pickedUpObj.transform.SetParent(attachPoint.transform);//parent it
         pickedUpObj.transform.position = attachPoint.transform.position;//set to pos
+        pickedUpObj.GetComponent<Rigidbody>().isKinematic = true;
     }
     
-    public void Detach(GameObject pickedUpObj)
+    public void Detach()
     {
-        pickedUpObj.transform.SetParent(null);//parent it
+        //drop any children of ball attach point
+        foreach (Transform obj in attachPoint.transform)
+        {
+            obj.transform.SetParent(null);//parent it
+            obj.GetComponent<Rigidbody>().isKinematic = false;
+        }
     }
 }

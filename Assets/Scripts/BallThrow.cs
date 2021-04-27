@@ -25,6 +25,9 @@ public class BallThrow : MonoBehaviour
     {
         if (ball == null)
             MakeBall();
+        ball.transform.SetParent(null);
+        ballRb.isKinematic = false;
+        
         ballRb.velocity = Vector3.zero;//cancel velocity
         ball.transform.position = this.transform.position;
         ballRb.AddForce(transform.forward*throwForce,ForceMode.Impulse);//add an impulse force to throw

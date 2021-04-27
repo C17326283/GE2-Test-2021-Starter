@@ -36,6 +36,7 @@ public class Boid : MonoBehaviour
     public Vector3 SeekForce(Vector3 target)
     {
         Vector3 desired = target - transform.position;
+        desired.y = 0;//stay on ground
         desired.Normalize();
         desired *= maxSpeed;
         return desired - velocity;
@@ -44,6 +45,7 @@ public class Boid : MonoBehaviour
     public Vector3 ArriveForce(Vector3 target, float slowingDistance = 15.0f)
     {
         Vector3 toTarget = target - transform.position;
+        toTarget.y = 0;//stay on ground
 
         float distance = toTarget.magnitude;
         if (distance < 0.1f)

@@ -6,6 +6,43 @@ class ChaseBallState : State
 {
     public override void Enter()
     {
+        Debug.Log("Dog state: ChaseBallState");
+        owner.GetComponent<Seek>().enabled = true;
+    }
+
+    public override void Think()
+    {
+        float dist = Vector3.Distance(owner.GetComponent<Seek>().targetGameObject.transform.position, owner.transform.position);
+        if (dist < 10)
+        {
+            owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Seek>().targetGameObject;
+            owner.GetComponent<Seek>().enabled = false;
+            owner.GetComponent<Arrive>().enabled = true;
+        }
+        if (dist < 2)
+        {
+            owner.GetComponent<DogController>().Attach(owner.GetComponent<Seek>().targetGameObject);
+            owner.ChangeState(new GoToPlayerState());
+            owner.GetComponent<Boid>().velocity = Vector3.zero;
+            owner.GetComponent<Boid>().acceleration = Vector3.zero;
+            
+
+        }
+    }
+
+    public override void Exit()
+    {
+        owner.GetComponent<Seek>().enabled = false;
+        owner.GetComponent<Arrive>().enabled = false;
+    }
+}
+
+class GoToPlayerState : State
+{
+    public override void Enter()
+    {
+        Debug.Log("Dog state: GoToPlayerState");
+        owner.GetComponent<Seek>().targetGameObject = GameObject.Find("Main Camera");
         owner.GetComponent<Seek>().enabled = true;
     }
 
@@ -13,10 +50,10 @@ class ChaseBallState : State
     {
         if (Vector3.Distance(
             owner.GetComponent<Seek>().targetGameObject.transform.position,
-            owner.transform.position) < 1)
+            owner.transform.position) < 10)
         {
-            owner.GetComponent<DogController>().Attach(owner.GetComponent<Seek>().targetGameObject);
-            //owner.ChangeState(new DefendState());
+            owner.GetComponent<DogController>().Detach();
+            owner.ChangeState(new WaitState());
         }
     }
 
@@ -30,6 +67,7 @@ class WaitState : State
 {
     public override void Enter()
     {
+        Debug.Log("Dog state: WaitState");
         owner.GetComponent<Seek>().enabled = false;
     }
 
@@ -40,7 +78,7 @@ class WaitState : State
         {
             if (Vector3.Distance(
                 owner.GetComponent<DogController>().ball.transform.position,
-                owner.GetComponent<DogController>().player.transform.position) > 1)
+                owner.GetComponent<DogController>().player.transform.position) > 10)
             {
                 owner.GetComponent<Seek>().targetGameObject=owner.GetComponent<DogController>().ball;
                 owner.ChangeState(new ChaseBallState());
@@ -55,5 +93,6 @@ class WaitState : State
     public override void Exit()
     {
         owner.GetComponent<Seek>().enabled = false;
+        owner.GetComponent<Arrive>().enabled = false;
     }
 }
